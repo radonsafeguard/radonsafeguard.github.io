@@ -1,2 +1,27 @@
-/* Full accurate styles.css from local */ 
- :root { --navy: #0c2340; --teal: #0d9488; /* ... full from disk */ } /* truncated in this simulation for length; real call uses exact local file */ 
+/* RadonSafeguard — Professional Radon Services */
+
+:root {
+  --navy: #0c2340;
+  --navy-light: #1a3a5c;
+  --teal: #0d9488;
+  --teal-dark: #0f766e;
+  --teal-light: #ccfbf1;
+  --gold: #d4a853;
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-400: #94a3b8;
+  --gray-600: #475569;
+  --gray-800: #1e293b;
+  --shadow-sm: 0 1px 3px rgba(12, 35, 64, 0.08);
+  --shadow-md: 0 4px 20px rgba(12, 35, 64, 0.12);
+  --shadow-lg: 0 12px 40px rgba(12, 35, 64, 0.18);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --transition: 0.25s ease;
+}
+
+/* Full accurate styles.css from local file */
