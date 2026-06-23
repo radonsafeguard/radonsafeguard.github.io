@@ -4,21 +4,22 @@ Professional C-NRPP certified radon testing and mitigation services for Edmonton
 
 ## Site
 
-Static HTML/CSS/JS website.
+Static HTML/CSS/JS website. Main entry is now index.html (root of GitHub Pages).
 
 ## Pages
 
-- Home (start.html)
+- Home (index.html)
 - Services
 - Health
 - Learn
-- Login
 - Contact
 - Quote form (Netlify)
-- Customer portal: Customers, Estimates, Reports, Invoices (all full now)
+- Login / Customer portal (demo)
+
+Legacy start.html now redirects to index.html for backward compatibility.
 
 ## Local development
 
 Open the HTML files with a local web server (Live Server, `python -m http.server`, etc). Form submissions require a web server.
 
-Last updated: 2026-06-22 (full portal pages: customers, estimates, reports, invoices)
+Last updated: 2026-06-22 (renamed main page back to index.html)
