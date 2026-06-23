@@ -12,13 +12,13 @@ Static HTML/CSS/JS website.
 - Services
 - Health
 - Learn
-- Login (fixed)
+- Login
 - Contact
 - Quote form (Netlify)
-- Customer portal (demo login)
+- Customer portal: Customers, Estimates, Reports, Invoices (all full now)
 
 ## Local development
 
 Open the HTML files with a local web server (Live Server, `python -m http.server`, etc). Form submissions require a web server.
 
-Last updated: 2026-06-22 (fixed login.html)
+Last updated: 2026-06-22 (full portal pages: customers, estimates, reports, invoices)
