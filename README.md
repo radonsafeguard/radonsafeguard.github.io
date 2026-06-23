@@ -9,7 +9,8 @@ Static HTML/CSS/JS website.
 Main entry: index.html
 
 ## Recent fixes
-- Full contact.html restored (form + complete content)
+- Full quote.html restored (complete form with in-person/online toggle, Netlify, etc.)
+- Full contact.html restored
 
 ## Pages
 - Home (index.html)
@@ -17,4 +18,4 @@ Main entry: index.html
 - Login / portal demo
 
 ## Forms
-Netlify forms enabled on contact.html and quote.html.
+Netlify forms on contact.html and quote.html.
