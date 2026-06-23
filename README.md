@@ -4,18 +4,9 @@ Professional C-NRPP certified radon testing and mitigation services for Edmonton
 
 ## Site
 
-Static HTML/CSS/JS website.
+Static HTML/CSS/JS website. Root served by index.html.
 
-Main entry: index.html
+Full content pushed for index.html and quote.html.
 
-## Recent fixes
-- Full quote.html restored (complete form with in-person/online toggle, Netlify, etc.)
-- Full contact.html restored
-
-## Pages
-- Home (index.html)
-- Services, Health, Learn, Contact, Quote
-- Login / portal demo
-
-## Forms
-Netlify forms on contact.html and quote.html.
+## Deployment
+Wait for GitHub Pages build (usually 1-5 mins). Use hard refresh (Ctrl+Shift+R).
