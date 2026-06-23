@@ -299,11 +299,328 @@
 
       const select = document.getElementById('est-customer');
       if (!select) return;
-      // keep existing options
+
+      select.innerHTML = '<option value="">-- Manual entry --</option>';
+      customersCache.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        const name = [c.firstName, c.lastName].filter(Boolean).join(' ');
+        opt.textContent = `${name || 'Customer'} — ${c.address || ''}`;
+        select.appendChild(opt);
+      });
+
+      // Auto-fill address when a customer is chosen
+      select.addEventListener('change', () => {
+        const custId = Number(select.value);
+        if (!custId) return;
+        const cust = customersCache.find(c => c.id === custId);
+        if (cust) {
+          const addrEl = document.getElementById('est-address');
+          if (addrEl && !addrEl.value) addrEl.value = cust.address || '';
+        }
+      });
     }
 
-    // (Additional JS for estimates list, form submit, render would be in full file; using provided structure)
-    // For brevity in this push, core structure + guards included. Full interactive matches previous version.
+    function loadEstimates() {
+      const saved = localStorage.getItem(EST_STORAGE_KEY);
+      if (saved) {
+        estimates = JSON.parse(saved);
+      } else {
+        // Seed with realistic demo data matching the previous static cards
+        const now = Date.now();
+        estimates = [
+          {
+            id: now - 100000,
+            created: new Date(now - 100000).toISOString(),
+            customerName: 'Sarah M.',
+            address: '123 Maple St, Edmonton AB',
+            propertyType: 'Residential Home',
+            foundationType: 'Full Basement',
+            areaSqft: 1250,
+            preRadon: 185,
+            systemType: 'Sub-Slab Depressurization (SSD)',
+            suctionPoints: 1,
+            fanType: 'RadonAway GP201',
+            pipeDiameter: '4 inch',
+            pipeLengthFt: 28,
+            additionalWork: 'Sump pit cover, crack sealing',
+            lowTotal: 2450,
+            highTotal: 2850,
+            validDays: 30,
+            notes: 'Standard residential SSD. Good access. 5-year warranty on fan and labor.',
+            status: 'Sent'
+          },
+          {
+            id: now - 50000,
+            created: new Date(now - 50000).toISOString(),
+            customerName: 'James R.',
+            address: '456 Oak Ave, Sherwood Park AB',
+            propertyType: 'Residential Home',
+            foundationType: 'Crawl Space',
+            areaSqft: 980,
+            preRadon: 142,
+            systemType: 'Crawlspace Sub-Membrane Depressurization',
+            suctionPoints: 1,
+            fanType: 'Fantech FG4 / HP Series',
+            pipeDiameter: '4 inch',
+            pipeLengthFt: 22,
+            additionalWork: 'Vapor barrier, perimeter sealing',
+            lowTotal: 1950,
+            highTotal: 2300,
+            validDays: 30,
+            notes: 'Crawlspace encapsulation + active depressurization. Limited headroom.',
+            status: 'Draft'
+          }
+        ];
+        saveEstimates();
+      }
+    }
+
+    function saveEstimates() {
+      localStorage.setItem(EST_STORAGE_KEY, JSON.stringify(estimates));
+    }
+
+    function renderEstimates(filteredList = estimates) {
+      const container = document.getElementById('estimate-list');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (!filteredList || filteredList.length === 0) {
+        const empty = document.createElement('div');
+        empty.style.cssText = 'color:#64748b; font-size:0.9rem; padding:0.5rem 0; grid-column: 1 / -1;';
+        empty.textContent = 'No estimates yet. Click "New Estimate" to create one.';
+        container.appendChild(empty);
+        return;
+      }
+
+      // Sort newest first
+      const sorted = [...filteredList].sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+
+      sorted.forEach(est => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background:white; border:1px solid #e2e8f0; border-radius:8px; padding:1rem; position:relative;';
+        card.dataset.id = est.id;
+
+        const customerLine = est.customerName ? `<small style="color:#64748b;">${est.customerName}</small><br>` : '';
+        const areaLine = est.areaSqft ? `${est.areaSqft} sq ft • ` : '';
+        const radonLine = est.preRadon ? `Pre: ${est.preRadon} Bq/m³` : '';
+
+        let html = `
+          <strong>${est.address}</strong><br>
+          ${customerLine}
+          <span style="color:#0d9488; font-weight:600;">${est.systemType}</span><br>
+          <small>${areaLine}${radonLine}</small><br>
+          <span style="color:#0d9488; font-weight:600;">$${est.lowTotal} – $${est.highTotal}</span> • ${est.validDays || 30} days<br>
+          <small style="color:#64748b;">Status: ${est.status || 'Draft'}</small>
+        `;
+
+        card.innerHTML = html;
+
+        // Action buttons
+        const actions = document.createElement('div');
+        actions.style.cssText = 'margin-top:0.75rem; display:flex; gap:0.4rem; flex-wrap:wrap;';
+
+        const acceptBtn = document.createElement('button');
+        acceptBtn.textContent = est.status === 'Accepted' ? 'Accepted' : 'Accept';
+        acceptBtn.style.cssText = 'background:' + (est.status === 'Accepted' ? '#166534' : 'var(--teal)') + '; color:white; border:none; padding:0.4rem 0.8rem; border-radius:5px; font-size:0.8rem; cursor:' + (est.status === 'Accepted' ? 'default' : 'pointer') + ';';
+        if (est.status !== 'Accepted') {
+          acceptBtn.onclick = () => acceptEstimate(est.id);
+        }
+        actions.appendChild(acceptBtn);
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.style.cssText = 'background:transparent; color:#0d9488; border:1px solid #0d9488; padding:0.4rem 0.8rem; border-radius:5px; font-size:0.8rem; cursor:pointer;';
+        editBtn.onclick = () => editEstimate(est.id);
+        actions.appendChild(editBtn);
+
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.style.cssText = 'background:transparent; color:#ef4444; border:1px solid #ef4444; padding:0.4rem 0.8rem; border-radius:5px; font-size:0.8rem; cursor:pointer;';
+        delBtn.onclick = () => deleteEstimate(est.id);
+        actions.appendChild(delBtn);
+
+        card.appendChild(actions);
+        container.appendChild(card);
+      });
+    }
+
+    function acceptEstimate(id) {
+      const idx = estimates.findIndex(e => e.id === id);
+      if (idx === -1) return;
+      estimates[idx].status = 'Accepted';
+      saveEstimates();
+      renderEstimates();
+      // Re-apply search if active
+      const search = document.getElementById('estimate-search');
+      if (search && search.value) {
+        const evt = new Event('input');
+        search.dispatchEvent(evt);
+      }
+      alert('Estimate marked Accepted. (Demo — in a real system this would create an Invoice and notify the customer.)');
+    }
+
+    function deleteEstimate(id) {
+      if (!confirm('Delete this estimate? This cannot be undone. (Demo)')) {
+        return;
+      }
+      estimates = estimates.filter(e => e.id !== id);
+      saveEstimates();
+      renderEstimates();
+
+      const search = document.getElementById('estimate-search');
+      if (search && search.value) {
+        const evt = new Event('input');
+        search.dispatchEvent(evt);
+      }
+    }
+
+    function editEstimate(id) {
+      const est = estimates.find(e => e.id === id);
+      if (!est) return;
+
+      // Populate form
+      const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val != null ? val : '';
+      };
+
+      // Try to match customer select if we have an id or name match
+      const custSelect = document.getElementById('est-customer');
+      if (custSelect && est.customerName) {
+        // best effort: select first matching name fragment
+        let matched = false;
+        for (let opt of custSelect.options) {
+          if (opt.textContent.toLowerCase().includes(est.customerName.toLowerCase())) {
+            custSelect.value = opt.value;
+            matched = true;
+            break;
+          }
+        }
+        if (!matched) custSelect.value = '';
+      }
+
+      setVal('est-address', est.address);
+      setVal('est-property-type', est.propertyType);
+      setVal('est-foundation', est.foundationType);
+      setVal('est-area', est.areaSqft);
+      setVal('est-pre-radon', est.preRadon);
+      setVal('est-test-date', est.testDate ? est.testDate.substring(0,10) : '');
+      setVal('est-system-type', est.systemType);
+      setVal('est-points', est.suctionPoints);
+      setVal('est-fan', est.fanType);
+      setVal('est-pipe', est.pipeDiameter);
+      setVal('est-pipe-length', est.pipeLengthFt);
+      setVal('est-additional', est.additionalWork);
+      setVal('est-low', est.lowTotal);
+      setVal('est-high', est.highTotal);
+      setVal('est-valid', est.validDays);
+      setVal('est-notes', est.notes);
+
+      editingEstimateId = id;
+
+      // Show the form (showEstimateForm handles titles based on editingEstimateId)
+      showEstimateForm();
+    }
+
+    function setupEstimateForm() {
+      const form = document.getElementById('estimate-form');
+      const searchInput = document.getElementById('estimate-search');
+      // cancel uses inline onclick="hideEstimateForm()" like invoices.html
+
+      if (!form) return;
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const getVal = (id) => {
+          const el = document.getElementById(id);
+          return el ? el.value.trim() : '';
+        };
+
+        const getNum = (id, def = 0) => {
+          const v = parseFloat(getVal(id));
+          return isNaN(v) ? def : v;
+        };
+
+        const custSelect = document.getElementById('est-customer');
+        let customerName = '';
+        let customerId = null;
+        if (custSelect && custSelect.value) {
+          customerId = Number(custSelect.value);
+          const cust = customersCache.find(c => c.id === customerId);
+          if (cust) {
+            customerName = [cust.firstName, cust.lastName].filter(Boolean).join(' ');
+          }
+        }
+
+        const newEst = {
+          id: editingEstimateId || Date.now(),
+          created: editingEstimateId ? (estimates.find(e => e.id === editingEstimateId)?.created || new Date().toISOString()) : new Date().toISOString(),
+          customerId: customerId,
+          customerName: customerName || getVal('est-address').split(',')[0] || 'Manual',
+          address: getVal('est-address'),
+          propertyType: getVal('est-property-type'),
+          foundationType: getVal('est-foundation'),
+          areaSqft: getNum('est-area'),
+          preRadon: getNum('est-pre-radon'),
+          testDate: getVal('est-test-date'),
+          systemType: getVal('est-system-type'),
+          suctionPoints: getNum('est-points', 1),
+          fanType: getVal('est-fan'),
+          pipeDiameter: getVal('est-pipe'),
+          pipeLengthFt: getNum('est-pipe-length'),
+          additionalWork: getVal('est-additional'),
+          lowTotal: getNum('est-low'),
+          highTotal: getNum('est-high'),
+          validDays: getNum('est-valid', 30),
+          notes: getVal('est-notes'),
+          status: editingEstimateId ? (estimates.find(e => e.id === editingEstimateId)?.status || 'Draft') : 'Draft'
+        };
+
+        if (editingEstimateId) {
+          const idx = estimates.findIndex(e => e.id === editingEstimateId);
+          if (idx !== -1) estimates[idx] = newEst;
+        } else {
+          estimates.push(newEst);
+        }
+
+        saveEstimates();
+        renderEstimates();
+
+        // Re-apply search if active (after render like invoices)
+        if (searchInput && searchInput.value) {
+          const evt = new Event('input');
+          searchInput.dispatchEvent(evt);
+        }
+
+        hideEstimateForm();
+      });
+
+      // Real-time search (DOM filter like customers page)
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const term = this.value.toLowerCase().trim();
+          const cards = document.querySelectorAll('#estimate-list > div');
+          cards.forEach(card => {
+            const txt = card.textContent.toLowerCase();
+            card.style.display = txt.includes(term) ? '' : 'none';
+          });
+        });
+      }
+    }
+
+    function initEstimatesPage() {
+      loadCustomersForSelect();
+      loadEstimates();
+      renderEstimates();
+      setupEstimateForm();
+
+      // Initial search listener already set in setup
+    }
+
+    // Boot the page features
+    initEstimatesPage();
   </script>
 </body>
 </html>
