@@ -20,7 +20,7 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="start.html" class="logo">
+      <a href="index.html" class="logo">
         <div class="logo-icon">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2L4 5.5v6.2c0 4.9 3.4 9.4 8 10.8 4.6-1.4 8-5.9 8-10.8V5.5L12 2z" fill="#ffffff"/>
@@ -120,7 +120,7 @@
   <script>
     // Guard: if not logged in, send back to public site
     if (localStorage.getItem('radonLoggedIn') !== 'true') {
-      window.location.href = 'start.html';
+      window.location.href = 'index.html';
     }
 
     // Logout
@@ -128,7 +128,7 @@
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         localStorage.removeItem('radonLoggedIn');
-        window.location.href = 'start.html';
+        window.location.href = 'index.html';
       });
     });
   </script>
