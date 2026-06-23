@@ -4,7 +4,11 @@ Professional C-NRPP certified radon testing and mitigation services for Edmonton
 
 ## Site
 
-Static HTML/CSS/JS website. Main entry is now index.html (root of GitHub Pages).
+Static HTML/CSS/JS website.
+
+**Main entry point: index.html** (served at https://radonsafeguard.github.io/)
+
+Legacy start.html has been removed.
 
 ## Pages
 
@@ -16,10 +20,8 @@ Static HTML/CSS/JS website. Main entry is now index.html (root of GitHub Pages).
 - Quote form (Netlify)
 - Login / Customer portal (demo)
 
-Legacy start.html now redirects to index.html for backward compatibility.
-
 ## Local development
 
-Open the HTML files with a local web server (Live Server, `python -m http.server`, etc). Form submissions require a web server.
+Open the HTML files with a local web server.
 
-Last updated: 2026-06-22 (renamed main page back to index.html)
+Last updated: 2026-06-23 (cleaned up to single index.html)
