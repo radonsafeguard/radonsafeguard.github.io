@@ -11,7 +11,8 @@ Static HTML/CSS/JS website.
 - Home (start.html)
 - Services
 - Health
-- Learn (full content now)
+- Learn
+- Login (fixed)
 - Contact
 - Quote form (Netlify)
 - Customer portal (demo login)
@@ -20,4 +21,4 @@ Static HTML/CSS/JS website.
 
 Open the HTML files with a local web server (Live Server, `python -m http.server`, etc). Form submissions require a web server.
 
-Last updated: 2026-06-22 (fixed learn.html)
+Last updated: 2026-06-22 (fixed login.html)
