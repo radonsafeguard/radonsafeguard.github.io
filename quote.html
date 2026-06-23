@@ -86,15 +86,9 @@
           <h3>Tell Us About Your Property</h3>
           <p>Choose your preferred quote type below. The more details you provide, the more accurate your quote will be.</p>
 
-          <form id="quote-form" action="https://formsubmit.co/radonsafeguard@gmail.com" method="POST">
-            <!-- Form backend: submits via FormSubmit.co and emails the details to radonsafeguard@gmail.com.
-                 IMPORTANT: You must open the site via a web server (e.g. Live Server, npx serve, or GitHub Pages).
-                 FormSubmit will not work if you just double-click the .html file.
-                 Replace the email in the action URL if you want submissions sent elsewhere.
-                 For production, consider signing up at formsubmit.co for advanced features. -->
-            <input type="hidden" name="_subject" value="New Quote Request - RadonSafeguard">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
+          <form id="quote-form" name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="quote">
+            <input type="hidden" name="bot-field" style="display:none">
             <!-- Quote Type Selection (first, so choice is made early) -->
             <div class="form-group">
               <label>Quote Type *</label>

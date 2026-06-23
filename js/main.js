@@ -65,15 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Early detection: FormSubmit does not work when browsing HTML files directly
-      if (window.location.protocol === 'file:') {
+      // For Netlify: forms only work when deployed to Netlify (not file:// or raw local server)
+      if (window.location.protocol === 'file:' || 
+          (window.location.hostname === 'localhost' && !window.location.port.includes('netlify'))) {
         const successEl = form.querySelector('.form-success') || document.querySelector('.form-success');
         if (successEl) {
-          successEl.textContent = "Unable to submit form. Please open this site through a web server (or use the live GitHub Pages version).";
+          successEl.textContent = "Form submissions require the site to be deployed on Netlify.";
           successEl.classList.add('show');
           setTimeout(() => successEl.classList.remove('show'), 8000);
         } else {
-          alert("Unable to submit form. Make sure you open this page through a web server. FormSubmit will not work in pages browsed as HTML files.");
+          alert("Form submissions only work when the site is deployed on Netlify.");
         }
         return;
       }
@@ -84,41 +85,26 @@ document.addEventListener('DOMContentLoaded', () => {
       // Disable button during submission
       if (submitBtn) submitBtn.disabled = true;
 
-      const actionUrl = form.getAttribute('action') || 'https://formsubmit.co/radonsafeguard@gmail.com';
-      console.log('[Form Debug] Submitting form to:', actionUrl);
+      const formData = new FormData(form);
+
+      // Netlify AJAX submission (must use x-www-form-urlencoded)
+      const params = new URLSearchParams();
+      for (const [key, value] of formData.entries()) {
+        params.append(key, value);
+      }
+
+      console.log('[Form Debug] Submitting Netlify form:', form.getAttribute('name'));
 
       try {
-        const formData = new FormData(form);
-
-        const response = await fetch(actionUrl, {
+        const response = await fetch('/', {
           method: 'POST',
-          body: formData,
           headers: {
-            'Accept': 'application/json'
-          }
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: params.toString()
         });
 
         console.log('[Form Debug] Response status:', response.status);
-
-        let resultText = '';
-        // Always read as text first to avoid "body stream already read" errors
-        let responseText = '';
-        try {
-          responseText = await response.text();
-          console.log('[Form Debug] Response text:', responseText);
-          resultText = responseText;
-          // Try to parse as JSON for better message if possible
-          try {
-            const parsed = JSON.parse(responseText);
-            if (parsed && parsed.message) resultText = parsed.message;
-            console.log('[Form Debug] Parsed JSON:', parsed);
-          } catch (parseErr) {
-            // not JSON, that's fine, use the raw text
-          }
-        } catch (readErr) {
-          resultText = 'Could not read response body';
-          console.error('[Form Debug] Failed to read response body:', readErr);
-        }
 
         if (response.ok) {
           if (successEl) {
@@ -131,18 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 6000);
           }
         } else {
-          const msg = resultText || 'Submission failed with status ' + response.status;
-          throw new Error(msg);
+          throw new Error('Submission failed with status ' + response.status);
         }
       } catch (err) {
         console.error('[Form Debug] Form submission error:', err);
 
         let userMessage = err.message || 'Unknown error';
-
-        // Clean up FormSubmit's specific file: protocol error
-        if (userMessage.includes('web server') || userMessage.includes('HTML files')) {
-          userMessage = "Please open this page through a web server (FormSubmit does not work with direct file:// links).";
-        }
 
         // Show error to user
         if (successEl) {
