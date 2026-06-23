@@ -6,7 +6,7 @@ Professional C-NRPP certified radon testing and mitigation services for Edmonton
 
 Static HTML/CSS/JS website. Root served by index.html.
 
-Full customers, estimates, reports, invoices (login-protected demo CRM area) restored with working forms, lists, localStorage, and index.html links.
+Full customers.html, estimates.html (and related) restored with complete interactive demo features (forms, localStorage, lists, search, edit/accept/delete).
 
 ## Deployment
-Wait for GitHub Pages build (usually 1-5 mins). Use hard refresh (Ctrl+Shift+R). Last update: customers.html and suite - 2026-06-22/23
+Wait for GitHub Pages build (1-5+ mins). Hard refresh (Ctrl+Shift+R). Updated 2026-06-23
