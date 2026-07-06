@@ -81,7 +81,7 @@
     <div class="container contact-grid">
       <div class="contact-info fade-in">
         <h3>Get In Touch</h3>
-        <p style="color: var(--gray-600); margin-bottom: 2rem;">Whether you need a quick home test or a comprehensive commercial survey, our team is ready to help. Reach out by phone, email, or the form - whichever works best for you.</p>
+        <p style="color: var(--gray-600); margin-bottom: 2rem;">Whether you need a quick home test or a comprehensive commercial survey, our team is ready to help. Reach out by phone, email, or the form — whichever works best for you.</p>
 
         <div class="contact-detail">
           <div class="contact-detail-icon">
@@ -111,9 +111,10 @@
       <div class="contact-form fade-in">
         <h3>Request a Free Quote</h3>
         <p>Fill out the form below or <a href="quote.html" style="font-weight:600;">use our dedicated quote form</a> for a more detailed property assessment.</p>
-        <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact">
-          <input type="hidden" name="bot-field" style="display:none">
+        <form id="contact-form" action="https://formsubmit.co/info@radonsafeguard.com" method="POST">
+          <input type="hidden" name="_subject" value="New Contact Inquiry - RadonSafeguard">
+          <!-- Honeypot for spam protection -->
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <div class="form-row">
             <div class="form-group">
               <label for="first-name">First Name *</label>
