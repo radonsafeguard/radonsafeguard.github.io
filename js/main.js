@@ -76,12 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         if (action.includes('formsubmit.co')) {
-          // External form-to-email service (works on GitHub Pages and locally)
-          console.log('[Form Debug] Submitting contact form to formsubmit.co');
+          // External form-to-email service using AJAX endpoint (works on GitHub Pages and locally)
+          console.log('[Form Debug] Submitting contact form to formsubmit.co AJAX');
 
-          const response = await fetch(action, {
+          // Convert FormData to plain object for JSON
+          const formObj = {};
+          for (const [key, value] of formData.entries()) {
+            if (key === '_honey') continue; // skip honeypot
+            formObj[key] = value;
+          }
+
+          // Use /ajax/ endpoint and send as JSON
+          const ajaxUrl = action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+
+          const response = await fetch(ajaxUrl, {
             method: 'POST',
-            body: formData
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(formObj)
           });
 
           if (response.ok) {
@@ -95,7 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
               }, 6000);
             }
           } else {
-            throw new Error('Email service returned status ' + response.status);
+            let errText = 'Email service returned status ' + response.status;
+            try {
+              const errData = await response.json();
+              if (errData && errData.message) errText = errData.message;
+            } catch (e) {}
+            throw new Error(errText);
           }
         } else {
           // Legacy Netlify handling (for other forms if still using Netlify)
