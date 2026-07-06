@@ -126,14 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show error to user
         if (successEl) {
-          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (780) 555-1234.`;
+          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (XXX) XXX-XXXX.`;
           successEl.classList.add('show');
           setTimeout(() => {
             successEl.classList.remove('show');
             successEl.textContent = "Thank you! Your request has been received.";
           }, 5000);
         } else {
-          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (780) 555-1234.`);
+          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (XXX) XXX-XXXX.`);
         }
       } finally {
         if (submitBtn) submitBtn.disabled = false;
