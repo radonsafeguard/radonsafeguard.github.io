@@ -65,75 +65,117 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // For Netlify: forms only work when deployed to Netlify (not file:// or raw local server)
-      if (window.location.protocol === 'file:' || 
-          (window.location.hostname === 'localhost' && !window.location.port.includes('netlify'))) {
-        const successEl = form.querySelector('.form-success') || document.querySelector('.form-success');
-        if (successEl) {
-          successEl.textContent = "Form submissions require the site to be deployed on Netlify.";
-          successEl.classList.add('show');
-          setTimeout(() => successEl.classList.remove('show'), 8000);
-        } else {
-          alert("Form submissions only work when the site is deployed on Netlify.");
-        }
-        return;
-      }
-
       const successEl = form.querySelector('.form-success') || document.querySelector('.form-success');
       const submitBtn = form.querySelector('button[type="submit"]');
+      const action = form.getAttribute('action') || '';
 
       // Disable button during submission
       if (submitBtn) submitBtn.disabled = true;
 
       const formData = new FormData(form);
 
-      // Netlify AJAX submission (must use x-www-form-urlencoded)
-      const params = new URLSearchParams();
-      for (const [key, value] of formData.entries()) {
-        params.append(key, value);
-      }
-
-      console.log('[Form Debug] Submitting Netlify form:', form.getAttribute('name'));
-
       try {
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: params.toString()
-        });
+        if (action.includes('formsubmit.co')) {
+          // External form-to-email service using AJAX endpoint (works on GitHub Pages and locally)
+          console.log('[Form Debug] Submitting contact form to formsubmit.co AJAX');
 
-        console.log('[Form Debug] Response status:', response.status);
+          // Convert FormData to plain object for JSON
+          const formObj = {};
+          for (const [key, value] of formData.entries()) {
+            if (key === '_honey') continue; // skip honeypot
+            formObj[key] = value;
+          }
 
-        if (response.ok) {
-          if (successEl) {
-            successEl.textContent = "Thank you! Your request has been received.";
-            successEl.classList.add('show');
-            form.reset();
-            setTimeout(() => {
-              successEl.classList.remove('show');
+          // Use /ajax/ endpoint and send as JSON
+          const ajaxUrl = action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+
+          const response = await fetch(ajaxUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(formObj)
+          });
+
+          if (response.ok) {
+            if (successEl) {
               successEl.textContent = "Thank you! Your request has been received.";
-            }, 6000);
+              successEl.classList.add('show');
+              form.reset();
+              setTimeout(() => {
+                successEl.classList.remove('show');
+                successEl.textContent = "Thank you! Your request has been received.";
+              }, 6000);
+            }
+          } else {
+            let errText = 'Email service returned status ' + response.status;
+            try {
+              const errData = await response.json();
+              if (errData && errData.message) errText = errData.message;
+            } catch (e) {}
+            throw new Error(errText);
           }
         } else {
-          throw new Error('Submission failed with status ' + response.status);
+          // Legacy Netlify handling (for other forms if still using Netlify)
+          if (window.location.protocol === 'file:' || 
+              (window.location.hostname === 'localhost' && !window.location.port.includes('netlify'))) {
+            if (successEl) {
+              successEl.textContent = "Form submissions require the site to be deployed on Netlify.";
+              successEl.classList.add('show');
+              setTimeout(() => successEl.classList.remove('show'), 8000);
+            } else {
+              alert("Form submissions only work when the site is deployed on Netlify.");
+            }
+            return;
+          }
+
+          // Netlify AJAX submission (must use x-www-form-urlencoded)
+          const params = new URLSearchParams();
+          for (const [key, value] of formData.entries()) {
+            params.append(key, value);
+          }
+
+          console.log('[Form Debug] Submitting Netlify form:', form.getAttribute('name'));
+
+          const response = await fetch('/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params.toString()
+          });
+
+          console.log('[Form Debug] Response status:', response.status);
+
+          if (response.ok) {
+            if (successEl) {
+              successEl.textContent = "Thank you! Your request has been received.";
+              successEl.classList.add('show');
+              form.reset();
+              setTimeout(() => {
+                successEl.classList.remove('show');
+                successEl.textContent = "Thank you! Your request has been received.";
+              }, 6000);
+            }
+          } else {
+            throw new Error('Submission failed with status ' + response.status);
+          }
         }
       } catch (err) {
         console.error('[Form Debug] Form submission error:', err);
 
         let userMessage = err.message || 'Unknown error';
 
-        // Show error to user
         if (successEl) {
-          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (780) 555-1234.`;
+          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (780) 851-5661.`;
           successEl.classList.add('show');
           setTimeout(() => {
             successEl.classList.remove('show');
             successEl.textContent = "Thank you! Your request has been received.";
           }, 5000);
         } else {
-          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (780) 555-1234.`);
+          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (780) 851-5661.`);
         }
       } finally {
         if (submitBtn) submitBtn.disabled = false;
