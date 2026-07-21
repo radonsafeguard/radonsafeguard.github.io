@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Log in to your RadonSafeguard account.">
+  <title>Login | RadonSafeguard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* No extra login-container styles - using inline to match customers.html */
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L4 5.5v6.2c0 4.9 3.4 9.4 8 10.8 4.6-1.4 8-5.9 8-10.8V5.5L12 2z" fill="#ffffff"/>
+            <path d="M12 8.5l-3.5 2.7v4.3h2v-2.8h3v2.8h2v-4.3L12 8.5z" fill="#0d9488"/>
+          </svg>
+        </div>
+        <span class="logo-text">Radon<span>Safeguard</span></span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="../index.html">Home</a>
+        <a href="../services.html">Services</a>
+        <a href="../health.html">Health</a>
+        <a href="../learn.html">Learn</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header-cta">
+        <a href="tel:+17808515661" class="phone-link">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+          (780) 851-5661
+        </a>
+        <a href="../quote.html" class="btn btn-primary">Free Quote</a>
+      </div>
+      <button class="menu-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="nav-mobile">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../health.html">Health</a>
+      <a href="../learn.html">Learn</a>
+      <a href="../contact.html">Contact</a>
+      <a href="tel:+17808515661">Call (780) 851-5661</a>
+    </nav>
+  </header>
+
+  <section style="padding: 2rem 0; padding-top: 120px;">
+    <div class="container" style="max-width: 420px;">
+      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(12,35,64,0.06);">
+        <h2 style="color: var(--navy); margin: 0 0 1.5rem; text-align: center; font-size: 1.5rem;">Log In</h2>
+        <form id="login-form" style="display: grid; gap: 1rem;">
+          <div>
+            <label style="display:block; font-size:0.85rem; margin-bottom:0.25rem; color:var(--navy);">Email *</label>
+            <input type="email" id="login-email" required style="width:100%; padding:0.6rem; border:1px solid #e2e8f0; border-radius:6px;" placeholder="you@example.com">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.85rem; margin-bottom:0.25rem; color:var(--navy);">Password *</label>
+            <input type="password" id="login-password" required style="width:100%; padding:0.6rem; border:1px solid #e2e8f0; border-radius:6px;" placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 0.5rem;">Log In</button>
+        </form>
+        <div id="login-success" style="display:none; margin-top:1rem; background:#ccfbf1; color:#0f766e; padding:0.75rem 1rem; border-radius:6px; font-weight:500; text-align:center;">
+          Login successful! Redirecting...
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">Radon<span>Safeguard</span></span>
+          <p>CNRTC certified radon professionals serving Edmonton, Alberta and surrounding communities. Your health and safety are our top priority.</p>
+
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="../services.html#residential-testing">Residential Testing</a></li>
+            <li><a href="../services.html#commercial-testing">Commercial Testing</a></li>
+            <li><a href="../services.html#mitigation">Radon Mitigation</a></li>
+            <li><a href="../services.html#maintenance">System Maintenance</a></li>
+            <li><a href="../services.html#real-estate">Real Estate Testing</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../health.html">Health</a></li>
+            <li><a href="../learn.html">Learn</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+            <li><a href="../contact.html#service-area">Service Area</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+            <a href="tel:+17808515661">(780) 851-5661</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:info@radonsafeguard.com">info@radonsafeguard.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 RadonSafeguard. All rights reserved.</span>
+        <span>CNRTC Certified</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Guard: if already logged in, go to customers page
+    if (localStorage.getItem('radonLoggedIn') === 'true') {
+      window.location.href = 'customers.html';
+    }
+
+    // Login form handler
+    const loginForm = document.getElementById('login-form');
+    const loginSuccess = document.getElementById('login-success');
+
+    if (loginForm && loginSuccess) {
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        loginSuccess.style.display = 'block';
+
+        // Fake login
+        localStorage.setItem('radonLoggedIn', 'true');
+
+        setTimeout(() => {
+          window.location.href = 'customers.html';
+        }, 800);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,14 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // If user is logged in, send them to the private customers page (the logged-in starting page)
-  // (this ensures original public nav only shows when not logged in)
-  if (localStorage.getItem('radonLoggedIn') === 'true' && 
-      !window.location.pathname.includes('customers.html') && 
-      !window.location.pathname.includes('estimates.html') &&
-      !window.location.pathname.includes('invoices.html') &&
-      !window.location.pathname.includes('reports.html')) {
-    window.location.href = 'customers.html';
-    return;
-  }
+  // Public marketing site only — staff portal lives in _portal/ (not linked or published).
   const header = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.menu-toggle');
   const navMobile = document.querySelector('.nav-mobile');
@@ -23,16 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (menuToggle && navMobile) {
+    const setMenuOpen = (open) => {
+      navMobile.classList.toggle('open', open);
+      menuToggle.classList.toggle('active', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (open) {
+        const firstLink = navMobile.querySelector('a');
+        firstLink?.focus();
+      }
+    };
+
     menuToggle.addEventListener('click', () => {
-      navMobile.classList.toggle('open');
-      menuToggle.classList.toggle('active');
+      setMenuOpen(!navMobile.classList.contains('open'));
     });
 
     navMobile.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        navMobile.classList.remove('open');
-        menuToggle.classList.remove('active');
+        setMenuOpen(false);
       });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMobile.classList.contains('open')) {
+        setMenuOpen(false);
+        menuToggle.focus();
+      }
     });
   }
 
@@ -168,14 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let userMessage = err.message || 'Unknown error';
 
         if (successEl) {
-          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (XXX) XXX-XXXX.`;
+          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (780) 851-5661.`;
           successEl.classList.add('show');
           setTimeout(() => {
             successEl.classList.remove('show');
             successEl.textContent = "Thank you! Your request has been received.";
           }, 5000);
         } else {
-          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (XXX) XXX-XXXX.`);
+          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (780) 851-5661.`);
         }
       } finally {
         if (submitBtn) submitBtn.disabled = false;
@@ -214,54 +221,4 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-
-  // Login modal functionality (demo only) - only relevant on public pages
-  const loginBtns = document.querySelectorAll('.login-btn');
-  const loginModal = document.getElementById('login-modal');
-
-  if (loginBtns.length && loginModal) {
-    loginBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.style.display = 'block';
-        // close mobile nav if open
-        if (navMobile) navMobile.classList.remove('open');
-        if (menuToggle) menuToggle.classList.remove('active');
-      });
-    });
-
-    // Close modal
-    const closeBtn = loginModal.querySelector('.close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        loginModal.style.display = 'none';
-      });
-    }
-
-    // Close when clicking outside the modal content
-    loginModal.addEventListener('click', (e) => {
-      if (e.target === loginModal) {
-        loginModal.style.display = 'none';
-      }
-    });
-
-    // Fake login form
-    const loginForm = document.getElementById('login-form');
-    const loginSuccess = loginModal.querySelector('.login-success');
-
-    if (loginForm && loginSuccess) {
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        loginForm.style.display = 'none';
-        loginSuccess.style.display = 'block';
-
-        // Mark as logged in and send to the private customers page (the logged-in starting page)
-        localStorage.setItem('radonLoggedIn', 'true');
-
-        setTimeout(() => {
-          window.location.href = 'customers.html';
-        }, 800);
-      });
-    }
-  }
 });
