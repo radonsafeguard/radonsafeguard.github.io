@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Radon Quote | RadonSafeguard</title>
   <link rel="canonical" href="https://radonsafeguard.github.io/quote.html">
-  <meta name="description" content="Request a free, no-obligation radon testing or mitigation quote in Edmonton and nearby communities. CNRTC certified. Fast response.">
+  <meta name="description" content="Request a free, no-obligation radon testing or mitigation quote in Edmonton and nearby communities. Fast response.">
 
   <!-- Favicon -->
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_CA">
   <meta property="og:url" content="https://radonsafeguard.github.io/quote.html">
   <meta property="og:title" content="Free Radon Quote | RadonSafeguard">
-  <meta property="og:description" content="Request a free, no-obligation radon testing or mitigation quote in Edmonton and nearby communities. CNRTC certified. Fast response.">
+  <meta property="og:description" content="Request a free, no-obligation radon testing or mitigation quote in Edmonton and nearby communities. Fast response.">
   <meta property="og:image" content="https://radonsafeguard.github.io/images/hero-home.jpg">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free Radon Quote | RadonSafeguard">
-  <meta name="twitter:description" content="Request a free, no-obligation radon testing or mitigation quote in Edmonton and nearby communities. CNRTC certified. Fast response.">
+  <meta name="twitter:description" content="Request a free, no-obligation radon testing or mitigation quote in Edmonton and nearby communities. Fast response.">
   <meta name="twitter:image" content="https://radonsafeguard.github.io/images/hero-home.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,15 +110,15 @@
               <label>Quote Type *</label>
               <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 0; white-space: nowrap;">
-                  <input type="radio" name="quote-type" value="in-person" checked style="margin-top: 4px;">
+                  <input type="radio" name="quote-type" value="online" checked style="margin-top: 4px;">
                   <span>
-                    <strong>In-Person Quote</strong>
+                    <strong>Online Quote</strong>
                   </span>
                 </label>
                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 0; white-space: nowrap;">
-                  <input type="radio" name="quote-type" value="online" style="margin-top: 4px;">
+                  <input type="radio" name="quote-type" value="in-person" style="margin-top: 4px;">
                   <span>
-                    <strong>Online Quote</strong>
+                    <strong>In-Person Quote</strong>
                   </span>
                 </label>
               </div>
@@ -145,6 +145,11 @@
                 <label for="phone">Phone *</label>
                 <input type="tel" id="phone" name="phone" required placeholder="7801234567">
               </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Property Address *</label>
+              <input type="text" id="address" name="address" placeholder="Street address, City, AB" required>
             </div>
 
             <!-- Property Basics -->
@@ -186,58 +191,28 @@
               </div>
             </div>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="levels">Number of Levels</label>
-                <select id="levels" name="levels">
-                  <option value="">Select</option>
-                  <option value="1">1 level (bungalow / ranch)</option>
-                  <option value="2">2 levels</option>
-                  <option value="3">3+ levels</option>
-                  <option value="split">Split level</option>
-                  <option value="multi">Multi-unit / commercial</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="furnaces">Number of Furnaces</label>
-                <input type="number" id="furnaces" name="furnaces" placeholder="e.g. 1" min="1" max="5">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="address">Property Address *</label>
-              <input type="text" id="address" name="address" placeholder="Street address, City, AB" required>
-            </div>
-
-            <!-- In-Person Quote Fields -->
-            <div id="in-person-section" style="display: block;">
-              <p style="margin: 1.25rem 0 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--navy);">Schedule Your In-Person Visit</p>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="preferred-date">Preferred Date</label>
-                  <input type="date" id="preferred-date" name="preferred-date">
-                </div>
-                <div class="form-group">
-                  <label for="preferred-time">Preferred Time</label>
-                  <select id="preferred-time" name="preferred-time">
-                    <option value="">Select</option>
-                    <option value="morning">Morning (8am – 12pm)</option>
-                    <option value="afternoon">Afternoon (12pm – 5pm)</option>
-                    <option value="evening">Evening (after 5pm)</option>
-                    <option value="flexible">Flexible</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="visit-notes">Notes for our visit (e.g. gate code, parking, best entrance)</label>
-                <textarea id="visit-notes" name="visit-notes" placeholder="Any special instructions for the site visit..."></textarea>
-              </div>
-            </div>
-
             <!-- Online Quote Fields (detailed questions shown for Online) -->
-            <div id="online-section" style="display: none;">
+            <div id="online-section" style="display: block;">
               <p style="margin: 1.5rem 0 0.25rem; font-weight: 600; font-size: 0.9rem; color: var(--navy);">Structural &amp; Foundation Details</p>
               <p style="font-size: 0.8rem; color: var(--gray-600); margin-bottom: 0.75rem;">Please provide these details so we can prepare an accurate online quote.</p>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="levels">Number of Levels</label>
+                  <select id="levels" name="levels">
+                    <option value="">Select</option>
+                    <option value="1">1 level (bungalow / ranch)</option>
+                    <option value="2">2 levels</option>
+                    <option value="3">3+ levels</option>
+                    <option value="split">Split level</option>
+                    <option value="multi">Multi-unit / commercial</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="furnaces">Number of Furnaces</label>
+                  <input type="number" id="furnaces" name="furnaces" placeholder="e.g. 1" min="1" max="5">
+                </div>
+              </div>
 
               <div class="form-row">
                 <div class="form-group">
@@ -411,75 +386,39 @@
 
             </div>
 
-            <!-- Radon Test Information (common to both) -->
-            <p style="margin: 1.25rem 0 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--navy);">Radon Test Information (if known)</p>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="tested-before">Have you tested before?</label>
-                <select id="tested-before" name="tested-before">
-                  <option value="">Select</option>
-                  <option value="no">No prior testing</option>
-                  <option value="yes-elevated">Yes — elevated levels</option>
-                  <option value="yes-below">Yes — under 200 Bq/m³ action level</option>
-                  <option value="unsure">Not sure / results unclear</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="radon-level">Radon Level (Bq/m³)</label>
-                <input type="text" id="radon-level" name="radon-level" placeholder="e.g. 320">
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="test-device">Radon Testing Device / Type</label>
-                <select id="test-device" name="test-device">
-                  <option value="">Select</option>
-                  <option value="continuous">Continuous Monitor</option>
-                  <option value="alpha-track">Alpha Track Detector</option>
-                  <option value="charcoal">Charcoal Canister</option>
-                  <option value="electret">Electret Ion Chamber</option>
-                  <option value="other">Other / Unknown</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="test-duration">Test Duration (Days)</label>
-                <input type="number" id="test-duration" name="test-duration" placeholder="e.g. 2 or 90">
-              </div>
-            </div>
-
-            <!-- Additional Info -->
-            <div class="form-row">
-              <div class="form-group">
-                <label for="heard-about">How did you hear about us?</label>
-                <select id="heard-about" name="heard-about">
-                  <option value="">Select</option>
-                  <option value="google">Google Search</option>
-                  <option value="referral">Referral</option>
-                  <option value="real-estate">Real Estate Agent</option>
-                  <option value="previous">Previous Customer</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="timeline">Preferred Timeline *</label>
-                <select id="timeline" name="timeline" required>
-                  <option value="">Select timeline</option>
-                  <option value="asap">As soon as possible</option>
-                  <option value="1-week">Within the next week</option>
-                  <option value="2-weeks">Within 2 weeks</option>
-                  <option value="month">Within the next month</option>
-                  <option value="flexible">Flexible / just exploring options</option>
-                </select>
-              </div>
-            </div>
-
             <div class="form-group">
               <label for="message">Additional Details or Questions</label>
               <textarea id="message" name="message" placeholder="Any other details about your property, timeline, real estate closing date, concerns, etc."></textarea>
             </div>
 
-            <p class="form-privacy">We only use the information you provide to respond to your request. We never sell your contact details.</p>
+            <div class="form-group">
+              <label for="heard-about">How did you hear about us?</label>
+              <select id="heard-about" name="heard-about">
+                <option value="">Select</option>
+                <option value="google">Google Search</option>
+                <option value="referral">Referral</option>
+                <option value="real-estate">Real Estate Agent</option>
+                <option value="previous">Previous Customer</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Online follow-up note (above submit) -->
+            <div id="online-followup" style="display: block;">
+              <p style="margin: 1.25rem 0 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--navy);">Receive Your Online Quote</p>
+              <p style="font-size: 0.95rem; color: var(--gray-700); line-height: 1.55; margin: 0 0 0.5rem;">
+                After you submit this request, a RadonSafeguard professional will review the details and contact you back with your personalized quote.
+              </p>
+            </div>
+
+            <!-- In-Person Quote Fields -->
+            <div id="in-person-section" style="display: none;">
+              <p style="margin: 1.25rem 0 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--navy);">Schedule Your In-Person Visit</p>
+              <p style="font-size: 0.95rem; color: var(--gray-700); line-height: 1.55; margin: 0 0 0.5rem;">
+                After you submit this request, a RadonSafeguard representative will contact you back to confirm a preferred date and time for your in-person quote.
+              </p>
+            </div>
+
             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 0.5rem;">Submit Quote Request</button>
 
             <div class="form-success">Thank you! Your quote request has been received.</div>
@@ -491,6 +430,7 @@
               function toggleQuoteFields() {
                 const inPerson = document.getElementById('in-person-section');
                 const online = document.getElementById('online-section');
+                const onlineFollowup = document.getElementById('online-followup');
                 const selected = document.querySelector('input[name="quote-type"]:checked');
 
                 if (!inPerson || !online || !selected) return;
@@ -498,9 +438,11 @@
                 if (selected.value === 'in-person') {
                   inPerson.style.display = 'block';
                   online.style.display = 'none';
+                  if (onlineFollowup) onlineFollowup.style.display = 'none';
                 } else {
                   inPerson.style.display = 'none';
                   online.style.display = 'block';
+                  if (onlineFollowup) onlineFollowup.style.display = 'block';
                 }
               }
 
@@ -509,7 +451,7 @@
                 radios.forEach(function(radio) {
                   radio.addEventListener('change', toggleQuoteFields);
                 });
-                // Set initial state (in-person by default)
+                // Set initial state (online by default)
                 toggleQuoteFields();
               });
             })();
@@ -558,18 +500,6 @@
     </div>
   </section>
 
-  <div class="container" style="margin-top: -1rem; margin-bottom: 3rem;">
-    <div class="trust-bar" style="padding: 1rem 0;">
-      <div class="container trust-items" style="justify-content: center; gap: 2rem; flex-wrap: wrap;">
-        <div class="trust-item" style="font-size: 0.9rem;">
-          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          <span>CNRTC Certified</span>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
   </main>
 
 
@@ -578,7 +508,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <span class="logo-text">Radon<span>Safeguard</span></span>
-          <p>CNRTC certified radon professionals serving Edmonton, Alberta and surrounding communities. Your health and safety are our top priority.</p>
+          <p>Professional radon testing and mitigation serving Edmonton, Alberta and surrounding communities. Your health and safety are our top priority.</p>
 
         </div>
         <div class="footer-col">
@@ -614,7 +544,6 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 RadonSafeguard. All rights reserved.</span>
-        <span>CNRTC Certified</span>
       </div>
     </div>
   </footer>
