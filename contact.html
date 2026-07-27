@@ -21,13 +21,13 @@
   <meta property="og:url" content="https://radonsafeguard.github.io/contact.html">
   <meta property="og:title" content="Contact Us | RadonSafeguard">
   <meta property="og:description" content="Contact RadonSafeguard in Edmonton for questions about radon testing or mitigation. Call (780) 851-5661 or request a free quote online.">
-  <meta property="og:image" content="https://radonsafeguard.github.io/images/service-vehicle.jpg">
+  <meta property="og:image" content="https://radonsafeguard.github.io/images/contact-call.jpg">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact Us | RadonSafeguard">
   <meta name="twitter:description" content="Contact RadonSafeguard in Edmonton for questions about radon testing or mitigation. Call (780) 851-5661 or request a free quote online.">
-  <meta name="twitter:image" content="https://radonsafeguard.github.io/images/service-vehicle.jpg">
+  <meta name="twitter:image" content="https://radonsafeguard.github.io/images/contact-call.jpg">
 
   <script type="application/ld+json">
     {
@@ -202,8 +202,8 @@
 
         <div style="margin-top: 2rem; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
           <picture>
-            <source srcset="images/service-vehicle.webp" type="image/webp">
-            <img src="images/service-vehicle.jpg" alt="RadonSafeguard service vehicle at a residential property" width="800" height="533" loading="lazy" decoding="async" style="width: 100%; height: 220px; object-fit: cover;">
+            <source srcset="images/contact-call.webp" type="image/webp">
+            <img src="images/contact-call.jpg" alt="Homeowner smiling while calling RadonSafeguard from home" width="1200" height="675" loading="lazy" decoding="async" style="width: 100%; height: 220px; object-fit: cover;">
           </picture>
         </div>
       </div>
@@ -216,7 +216,7 @@
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <!-- Honeypot for spam protection -->
-          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form-row">
             <div class="form-group">
               <label for="first-name">First Name *</label>
@@ -241,8 +241,8 @@
             <label for="message">Your Message *</label>
             <textarea id="message" name="message" placeholder="Tell us about your property, timeline, or any questions you have..." required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Send Message</button>
-          <div class="form-success">Thank you! Your request has been received.</div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" data-default-label="Send Message">Send Message</button>
+          <div class="form-success" role="status" aria-live="polite" aria-atomic="true"></div>
         </form>
       </div>
     </div>

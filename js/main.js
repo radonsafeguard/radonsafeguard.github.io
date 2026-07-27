@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const navMobile = document.querySelector('.nav-mobile');
   const contactForm = document.getElementById('contact-form');
   const quoteForm = document.getElementById('quote-form');
-  const formSuccess = document.querySelector('.form-success');
 
   if (header) {
     window.addEventListener('scroll', () => {
@@ -67,125 +66,122 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const showFormStatus = (el, message, isError) => {
+    if (!el) return;
+    el.textContent = message;
+    el.classList.add('show');
+    el.classList.toggle('is-error', Boolean(isError));
+    el.classList.toggle('is-success', !isError);
+  };
+
+  const clearFormStatus = (el) => {
+    if (!el) return;
+    el.classList.remove('show', 'is-error', 'is-success');
+    el.textContent = '';
+  };
+
+  const friendlyFormError = (raw) => {
+    const msg = (raw || '').toString();
+    const lower = msg.toLowerCase();
+    if (
+      lower.includes('activate') ||
+      lower.includes('confirm your email') ||
+      lower.includes('confirmation') ||
+      lower.includes('not confirmed')
+    ) {
+      return 'Please check info@radonsafeguard.com for a FormSubmit activation email and confirm the form once. Then try again, or call (780) 851-5661.';
+    }
+    if (lower.includes('failed to fetch') || lower.includes('networkerror') || lower.includes('network')) {
+      return 'Network problem while sending. Check your connection and try again, or call (780) 851-5661.';
+    }
+    return `Sorry, there was a problem sending your message. ${msg || 'Please try again.'} You can also call (780) 851-5661.`;
+  };
+
   const handleFormSubmit = (form) => {
     if (!form) return;
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const successEl = form.querySelector('.form-success') || document.querySelector('.form-success');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const statusEl = form.querySelector('.form-success');
       const submitBtn = form.querySelector('button[type="submit"]');
       const action = form.getAttribute('action') || '';
+      const defaultLabel = submitBtn?.dataset.defaultLabel || submitBtn?.textContent || 'Submit';
+      const isQuote = form.id === 'quote-form';
+      const successMessage = isQuote
+        ? 'Thank you! Your quote request has been received.'
+        : 'Thank you! Your message has been sent.';
 
-      // Disable button during submission
-      if (submitBtn) submitBtn.disabled = true;
+      clearFormStatus(statusEl);
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
 
       const formData = new FormData(form);
 
       try {
         if (action.includes('formsubmit.co')) {
-          // External form-to-email service using AJAX endpoint (works on GitHub Pages and locally)
-          console.log('[Form Debug] Submitting contact form to formsubmit.co AJAX');
-
-          // Convert FormData to plain object for JSON
           const formObj = {};
           for (const [key, value] of formData.entries()) {
-            if (key === '_honey') continue; // skip honeypot
+            if (key === '_honey' || key === '_next') continue;
             formObj[key] = value;
           }
 
-          // Use /ajax/ endpoint and send as JSON
           const ajaxUrl = action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
 
           const response = await fetch(ajaxUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Accept': 'application/json'
+              Accept: 'application/json'
             },
             body: JSON.stringify(formObj)
           });
 
-          if (response.ok) {
-            if (successEl) {
-              successEl.textContent = "Thank you! Your request has been received.";
-              successEl.classList.add('show');
-              form.reset();
-              setTimeout(() => {
-                successEl.classList.remove('show');
-                successEl.textContent = "Thank you! Your request has been received.";
-              }, 6000);
-            }
-          } else {
-            let errText = 'Email service returned status ' + response.status;
-            try {
-              const errData = await response.json();
-              if (errData && errData.message) errText = errData.message;
-            } catch (e) {}
-            throw new Error(errText);
+          let payload = null;
+          try {
+            payload = await response.json();
+          } catch (e) {
+            payload = null;
           }
-        } else {
-          // Legacy Netlify handling (for other forms if still using Netlify)
-          if (window.location.protocol === 'file:' || 
-              (window.location.hostname === 'localhost' && !window.location.port.includes('netlify'))) {
-            if (successEl) {
-              successEl.textContent = "Form submissions require the site to be deployed on Netlify.";
-              successEl.classList.add('show');
-              setTimeout(() => successEl.classList.remove('show'), 8000);
-            } else {
-              alert("Form submissions only work when the site is deployed on Netlify.");
+
+          if (response.ok && (!payload || payload.success !== false)) {
+            form.reset();
+            if (isQuote) {
+              const onlineRadio = form.querySelector('input[name="quote-type"][value="online"]');
+              if (onlineRadio) {
+                onlineRadio.checked = true;
+                onlineRadio.dispatchEvent(new Event('change', { bubbles: true }));
+              }
             }
+            showFormStatus(statusEl, successMessage, false);
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = defaultLabel;
+            }
+            statusEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             return;
           }
 
-          // Netlify AJAX submission (must use x-www-form-urlencoded)
-          const params = new URLSearchParams();
-          for (const [key, value] of formData.entries()) {
-            params.append(key, value);
-          }
-
-          console.log('[Form Debug] Submitting Netlify form:', form.getAttribute('name'));
-
-          const response = await fetch('/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params.toString()
-          });
-
-          console.log('[Form Debug] Response status:', response.status);
-
-          if (response.ok) {
-            if (successEl) {
-              successEl.textContent = "Thank you! Your request has been received.";
-              successEl.classList.add('show');
-              form.reset();
-              setTimeout(() => {
-                successEl.classList.remove('show');
-                successEl.textContent = "Thank you! Your request has been received.";
-              }, 6000);
-            }
-          } else {
-            throw new Error('Submission failed with status ' + response.status);
-          }
+          const errText =
+            (payload && (payload.message || payload.error)) ||
+            `Email service returned status ${response.status}`;
+          throw new Error(errText);
         }
+
+        throw new Error('Form is not configured for submission on this site.');
       } catch (err) {
-        console.error('[Form Debug] Form submission error:', err);
-
-        let userMessage = err.message || 'Unknown error';
-
-        if (successEl) {
-          successEl.textContent = `Sorry, there was a problem sending your message. ${userMessage} Please try again or call (780) 851-5661.`;
-          successEl.classList.add('show');
-          setTimeout(() => {
-            successEl.classList.remove('show');
-            successEl.textContent = "Thank you! Your request has been received.";
-          }, 5000);
-        } else {
-          alert(`Sorry, there was a problem sending your message. ${userMessage} Please call (780) 851-5661.`);
+        console.error('[Form] Submission error:', err);
+        showFormStatus(statusEl, friendlyFormError(err.message), true);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = defaultLabel;
         }
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
       }
     });
   };

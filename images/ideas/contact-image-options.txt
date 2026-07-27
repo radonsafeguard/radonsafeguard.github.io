@@ -1,0 +1,31 @@
+Contact page "Get In Touch" image options (review only — not on the live site)
+
+Current live image: images/service-vehicle.webp (service vehicle / property)
+
+01  contact-01-van-at-home.jpg         — Work van at a suburban home (service-arrival feel)
+02  contact-02-doorway-welcome.jpg     — Homeowner in open doorway (personal welcome)
+03  contact-03-basement-radon-pipe.jpg — Mechanical room / PVC radon piping (trade-specific)
+04  contact-04-desk-phone-ready.jpg    — Phone and desk setup (call-us mood)
+05  contact-05-suburban-street.jpg     — Neighborhood aerial street (local homes)
+06  contact-06-exterior-pipe-check.jpg — Technician at exterior foundation pipe
+07  contact-07-bright-living-room.jpg  — Calm living room (healthy home)
+08  contact-08-keys-and-phone.jpg      — Keys + phone (reach out / appointment)
+09  contact-09-winter-home-dusk.jpg    — Alberta-style winter home at dusk (local season)
+10  contact-10-couple-kitchen.jpg      — Couple reviewing info at kitchen island
+
+All images: 16:9 style, suitable for the wide contact-panel crop (height ~220px).
+Pick a number when ready and we can swap it onto contact.html + WebP.
+
+Phone-call support samples (people calling from home):
+11  contact-call-01-home-office.jpg
+12  contact-call-02-couple-basement.jpg
+13  contact-call-03-kitchen.jpg
+14  contact-call-04-living-window.jpg
+15  contact-call-05-sofa.jpg
+
+Happy phone-call samples:
+16  contact-call-happy-01.jpg
+17  contact-call-happy-02.jpg
+18  contact-call-happy-03.jpg
+19  contact-call-happy-04.jpg
+20  contact-call-happy-05.jpg

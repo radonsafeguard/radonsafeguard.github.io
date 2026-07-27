@@ -1744,6 +1744,24 @@ section {
   display: block;
 }
 
+.form-success.is-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  font-weight: 500;
+}
+
+.form-success.is-success {
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  border: 1px solid rgba(13, 148, 136, 0.25);
+}
+
+button[type="submit"][disabled] {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 .map-embed {
   margin-top: 4rem;
   border-radius: var(--radius-lg);
