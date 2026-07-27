@@ -1325,6 +1325,46 @@ section {
   margin: 0 auto;
 }
 
+.service-jump-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  max-width: 720px;
+  margin: 1.75rem auto 0.5rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.service-jump-nav a {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.service-jump-nav a:hover,
+.service-jump-nav a:focus-visible {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+  outline: none;
+}
+
+/* Offset fixed header when jumping to service sections */
+#testing,
+#mitigation,
+#maintenance,
+#real-estate {
+  scroll-margin-top: 88px;
+}
+
 .breadcrumb {
   display: flex;
   justify-content: center;
