@@ -1998,6 +1998,23 @@ button[type="submit"][disabled] {
   margin-bottom: 1rem;
 }
 
+/* Quote page layout */
+.quote-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.quote-sidebar {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  position: sticky;
+  top: 96px;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .why-grid,
@@ -2005,8 +2022,18 @@ button[type="submit"][disabled] {
   .service-detail-grid,
   .about-intro,
   .contact-grid,
-  .footer-grid {
+  .footer-grid,
+  .quote-layout {
     grid-template-columns: 1fr;
+  }
+
+  .quote-sidebar {
+    position: static;
+    order: 2;
+  }
+
+  .quote-layout .contact-form {
+    order: 1;
   }
 
   .process-steps {
