@@ -4,4 +4,4 @@ Allow: /
 # Staff portal is not published on GitHub Pages, but keep out of crawlers if mirrored
 Disallow: /_portal/
 
-Sitemap: https://radonsafeguard.github.io/sitemap.xml
+Sitemap: https://radonsafeguard.com/sitemap.xml
