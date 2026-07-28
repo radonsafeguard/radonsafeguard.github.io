@@ -2003,12 +2003,17 @@ button[type="submit"][disabled] {
   margin-bottom: 1rem;
 }
 
-/* Quote page layout */
+/* Quote page layout: form left, sidebar right */
 .quote-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: minmax(0, 1fr) 360px;
   gap: 3rem;
   align-items: start;
+}
+
+.quote-layout > .contact-form {
+  min-width: 0;
+  width: 100%;
 }
 
 .quote-sidebar {
@@ -2018,6 +2023,9 @@ button[type="submit"][disabled] {
   padding: 2rem;
   position: sticky;
   top: 96px;
+  width: 100%;
+  max-width: 360px;
+  justify-self: end;
 }
 
 /* Responsive */
@@ -2027,18 +2035,8 @@ button[type="submit"][disabled] {
   .service-detail-grid,
   .about-intro,
   .contact-grid,
-  .footer-grid,
-  .quote-layout {
+  .footer-grid {
     grid-template-columns: 1fr;
-  }
-
-  .quote-sidebar {
-    position: static;
-    order: 2;
-  }
-
-  .quote-layout .contact-form {
-    order: 1;
   }
 
   .process-steps {
@@ -2064,6 +2062,20 @@ button[type="submit"][disabled] {
 
   .pricing-card.featured {
     transform: none;
+  }
+}
+
+/* Quote form + sidebar stack only on smaller screens */
+@media (max-width: 900px) {
+  .quote-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .quote-sidebar {
+    position: static;
+    max-width: none;
+    justify-self: stretch;
   }
 }
 
