@@ -1187,6 +1187,11 @@ section {
   color: var(--white);
   margin-bottom: 1rem;
   display: block;
+  text-decoration: none;
+}
+
+.footer-brand a.logo-text:hover {
+  opacity: 0.9;
 }
 
 .footer-brand p {
