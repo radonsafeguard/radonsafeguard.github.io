@@ -106,19 +106,21 @@
             <!-- Honeypot for spam protection -->
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
             <!-- Quote Type Selection (first, so choice is made early) -->
-            <div class="form-group">
-              <label>Quote Type *</label>
-              <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 0; white-space: nowrap;">
-                  <input type="radio" name="quote-type" value="online" checked style="margin-top: 4px;">
-                  <span>
-                    <strong>Online Quote</strong>
+            <div class="form-group quote-type-group">
+              <span class="quote-type-label" id="quote-type-label">Quote Type *</span>
+              <div class="quote-type-options" role="radiogroup" aria-labelledby="quote-type-label">
+                <label class="quote-type-card">
+                  <input type="radio" name="quote-type" value="online" checked>
+                  <span class="quote-type-card-body">
+                    <span class="quote-type-card-title">Online Quote</span>
+                    <span class="quote-type-card-desc">Best for a remote estimate. We review your details and reply with a personalized quote.</span>
                   </span>
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 0; white-space: nowrap;">
-                  <input type="radio" name="quote-type" value="in-person" style="margin-top: 4px;">
-                  <span>
-                    <strong>In-Person Quote</strong>
+                <label class="quote-type-card">
+                  <input type="radio" name="quote-type" value="in-person">
+                  <span class="quote-type-card-body">
+                    <span class="quote-type-card-title">In-Person Quote</span>
+                    <span class="quote-type-card-desc">Best when you want a site visit. We contact you to schedule a convenient time.</span>
                   </span>
                 </label>
               </div>
@@ -425,14 +427,22 @@
           </form>
 
           <script>
-            // Toggle fields based on quote type selection
+            // Toggle fields + selected card styling based on quote type
             (function() {
+              function syncQuoteTypeCards() {
+                document.querySelectorAll('.quote-type-card').forEach(function(card) {
+                  var input = card.querySelector('input[name="quote-type"]');
+                  card.classList.toggle('is-selected', !!(input && input.checked));
+                });
+              }
+
               function toggleQuoteFields() {
                 const inPerson = document.getElementById('in-person-section');
                 const online = document.getElementById('online-section');
                 const onlineFollowup = document.getElementById('online-followup');
                 const selected = document.querySelector('input[name="quote-type"]:checked');
 
+                syncQuoteTypeCards();
                 if (!inPerson || !online || !selected) return;
 
                 if (selected.value === 'in-person') {
@@ -451,7 +461,6 @@
                 radios.forEach(function(radio) {
                   radio.addEventListener('change', toggleQuoteFields);
                 });
-                // Set initial state (online by default)
                 toggleQuoteFields();
               });
             })();

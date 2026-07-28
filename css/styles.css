@@ -2006,7 +2006,7 @@ button[type="submit"][disabled] {
 /* Quote page layout: form left, sidebar right */
 .quote-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
   gap: 3rem;
   align-items: start;
 }
@@ -2014,6 +2014,8 @@ button[type="submit"][disabled] {
 .quote-layout > .contact-form {
   min-width: 0;
   width: 100%;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .quote-sidebar {
@@ -2025,7 +2027,118 @@ button[type="submit"][disabled] {
   top: 96px;
   width: 100%;
   max-width: 360px;
+  min-width: 0;
   justify-self: end;
+}
+
+/* Quote type choice cards */
+.quote-type-group {
+  margin-bottom: 1.75rem;
+}
+
+.quote-type-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.65rem;
+}
+
+.quote-type-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.quote-type-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  min-width: 0;
+  margin: 0;
+}
+
+.quote-type-card input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+.quote-type-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: 100%;
+  min-width: 0;
+  padding: 1rem 1rem 1rem 2.75rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  background: var(--white);
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.quote-type-card-body::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 1.15rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--gray-400);
+  border-radius: 50%;
+  background: var(--white);
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.quote-type-card-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+}
+
+.quote-type-card-desc {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--gray-600);
+  line-height: 1.45;
+}
+
+.quote-type-card:hover .quote-type-card-body {
+  border-color: rgba(13, 148, 136, 0.45);
+}
+
+.quote-type-card:has(input:checked) .quote-type-card-body,
+.quote-type-card.is-selected .quote-type-card-body {
+  border-color: var(--teal);
+  background: var(--teal-light);
+  box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.15);
+}
+
+.quote-type-card:has(input:checked) .quote-type-card-body::before,
+.quote-type-card.is-selected .quote-type-card-body::before {
+  border-color: var(--teal);
+  background: var(--teal);
+  box-shadow: inset 0 0 0 3px var(--white);
+}
+
+.quote-type-card input:focus-visible + .quote-type-card-body {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.form-row > .form-group {
+  min-width: 0;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+  max-width: 100%;
 }
 
 /* Responsive */
@@ -2068,14 +2181,23 @@ button[type="submit"][disabled] {
 /* Quote form + sidebar stack only on smaller screens */
 @media (max-width: 900px) {
   .quote-layout {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
   }
 
   .quote-sidebar {
     position: static;
     max-width: none;
     justify-self: stretch;
+  }
+
+  /* Two-column form fields get too tight with long labels */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-type-options {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2138,6 +2260,69 @@ button[type="submit"][disabled] {
 
   .why-image img {
     height: 320px;
+  }
+
+  /* Quote / contact forms: fit narrow phones without horizontal scroll */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  section {
+    padding: 3rem 0;
+  }
+
+  .page-hero {
+    padding: 2.5rem 0;
+  }
+
+  .page-hero p {
+    font-size: 1rem;
+    padding: 0 0.25rem;
+  }
+
+  .contact-form {
+    padding: 1.25rem;
+  }
+
+  .contact-form h3 {
+    font-size: 1.25rem;
+  }
+
+  .quote-sidebar {
+    padding: 1.25rem;
+  }
+
+  .quote-type-options {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  /* Prevent iOS zoom-on-focus and clipped controls */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 1rem;
+    border-radius: var(--radius);
+  }
+
+  .quote-sidebar {
+    padding: 1rem;
+  }
+
+  .page-hero h1 {
+    font-size: 1.75rem;
   }
 }
 
