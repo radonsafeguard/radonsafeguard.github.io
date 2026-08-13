@@ -785,12 +785,13 @@ section {
 }
 
 .why-image-badge--levels {
-  left: 1.25rem;
+  left: 1rem;
   right: auto;
   bottom: 1.25rem;
-  width: auto;
-  max-width: min(20rem, calc(100% - 2.5rem));
-  padding: 0.55rem 0.85rem 0.6rem;
+  width: min(21.5rem, calc(100% - 2rem));
+  max-width: min(21.5rem, calc(100% - 2rem));
+  box-sizing: border-box;
+  padding: 0.55rem 0.75rem 0.6rem;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 14px;
@@ -810,14 +811,17 @@ section {
 
 .why-levels-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+  /* Extra width for "Health Canada" so labels don't collide */
+  grid-template-columns: minmax(5.75rem, 1.4fr) minmax(4rem, 1fr) minmax(3.25rem, 0.9fr);
+  column-gap: 0.35rem;
+  width: 100%;
 }
 
 .why-levels-item {
   text-align: center;
-  padding: 0 0.35rem;
+  padding: 0 0.25rem;
   border-left: 1px solid var(--gray-200);
+  overflow: visible;
 }
 
 .why-levels-item:first-child {
@@ -827,11 +831,11 @@ section {
 
 .why-levels-org {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 500;
   color: var(--gray-600);
-  margin-bottom: 0.2rem;
-  line-height: 1.25;
+  margin-bottom: 0.15rem;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
@@ -846,6 +850,17 @@ section {
 }
 
 @media (max-width: 520px) {
+  .why-image-badge--levels {
+    width: min(20.5rem, calc(100% - 1.5rem));
+    max-width: min(20.5rem, calc(100% - 1.5rem));
+    left: 0.75rem;
+  }
+
+  .why-levels-grid {
+    grid-template-columns: minmax(5.5rem, 1.35fr) minmax(3.75rem, 1fr) minmax(3rem, 0.85fr);
+    column-gap: 0.25rem;
+  }
+
   .why-levels-val {
     font-size: 0.95rem;
   }
