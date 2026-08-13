@@ -791,7 +791,7 @@ section {
   width: min(21.5rem, calc(100% - 2rem));
   max-width: min(21.5rem, calc(100% - 2rem));
   box-sizing: border-box;
-  padding: 0.55rem 0.75rem 0.6rem;
+  padding: 0.4rem 0.75rem 0.42rem;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 14px;
@@ -801,8 +801,8 @@ section {
 }
 
 .why-levels-label {
-  margin: 0 0 0.3rem;
-  font-size: 0.65rem;
+  margin: 0 0 0.18rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -834,8 +834,8 @@ section {
   font-size: 0.68rem;
   font-weight: 500;
   color: var(--gray-600);
-  margin-bottom: 0.15rem;
-  line-height: 1.2;
+  margin-bottom: 0.05rem;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
@@ -844,7 +844,7 @@ section {
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1;
   color: var(--navy);
   font-variant-numeric: tabular-nums;
 }
