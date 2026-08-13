@@ -708,6 +708,27 @@ section {
   color: var(--gray-600);
 }
 
+.why-feature ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.why-feature li {
+  position: relative;
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}
+
+.why-feature li::before {
+  content: "•";
+  position: absolute;
+  left: 0.15rem;
+  color: var(--teal);
+  font-weight: 700;
+}
+
 .why-image {
   position: relative;
   border-radius: var(--radius-lg);
@@ -721,6 +742,24 @@ section {
   object-fit: cover;
 }
 
+/* Soft scrim so the action-levels badge stays readable on any photo crop */
+.why-image::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  background: linear-gradient(
+    to top,
+    rgba(12, 35, 64, 0.45) 0%,
+    rgba(12, 35, 64, 0.18) 45%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
 .why-image-badge {
   position: absolute;
   bottom: 1.5rem;
@@ -729,6 +768,8 @@ section {
   padding: 1rem 1.25rem;
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
+  max-width: min(20rem, calc(100% - 3rem));
+  z-index: 2;
 }
 
 .why-image-badge strong {
@@ -741,6 +782,77 @@ section {
 .why-image-badge span {
   font-size: 0.85rem;
   color: var(--gray-600);
+}
+
+.why-image-badge--levels {
+  left: 1.25rem;
+  right: auto;
+  bottom: 1.25rem;
+  width: auto;
+  max-width: min(20rem, calc(100% - 2.5rem));
+  padding: 0.55rem 0.85rem 0.6rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(12, 35, 64, 0.2);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.why-levels-label {
+  margin: 0 0 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+}
+
+.why-levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.why-levels-item {
+  text-align: center;
+  padding: 0 0.35rem;
+  border-left: 1px solid var(--gray-200);
+}
+
+.why-levels-item:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.why-levels-org {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  margin-bottom: 0.2rem;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.why-levels-val {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 520px) {
+  .why-levels-val {
+    font-size: 0.95rem;
+  }
+
+  .why-levels-org {
+    font-size: 0.62rem;
+  }
 }
 
 /* Process */
