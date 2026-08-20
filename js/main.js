@@ -217,4 +217,61 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+  const lightbox = document.getElementById('work-lightbox');
+  if (lightbox) {
+    const lightboxImage = document.getElementById('work-lightbox-image');
+    const lightboxCaption = document.getElementById('work-lightbox-caption');
+    const prevBtn = lightbox.querySelector('.work-lightbox-prev');
+    const nextBtn = lightbox.querySelector('.work-lightbox-next');
+    let workSources = [];
+    let workIndex = 0;
+    let lastFocus = null;
+
+    const visibleSources = () => Array.from(document.querySelectorAll('.work-card'));
+
+    const showWork = (index) => {
+      workSources = visibleSources();
+      if (!workSources.length) return;
+      workIndex = (index + workSources.length) % workSources.length;
+      const el = workSources[workIndex];
+      lightboxImage.src = el.dataset.workSrc;
+      lightboxImage.alt = el.dataset.workAlt || '';
+      lightboxCaption.textContent = el.dataset.workCaption || '';
+    };
+
+    const openLightbox = (el) => {
+      workSources = visibleSources();
+      workIndex = Math.max(0, workSources.indexOf(el));
+      lastFocus = document.activeElement;
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      showWork(workIndex);
+      lightbox.querySelector('.work-lightbox-close')?.focus();
+    };
+
+    const closeLightbox = () => {
+      lightbox.hidden = true;
+      lightboxImage.removeAttribute('src');
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    };
+
+    document.querySelectorAll('.work-card').forEach(el => {
+      el.addEventListener('click', () => openLightbox(el));
+    });
+
+    lightbox.querySelectorAll('[data-work-close]').forEach(el => {
+      el.addEventListener('click', closeLightbox);
+    });
+    prevBtn?.addEventListener('click', () => showWork(workIndex - 1));
+    nextBtn?.addEventListener('click', () => showWork(workIndex + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showWork(workIndex - 1);
+      if (e.key === 'ArrowRight') showWork(workIndex + 1);
+    });
+  }
 });
