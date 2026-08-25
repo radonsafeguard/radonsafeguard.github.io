@@ -192,6 +192,22 @@
               </div>
             </div>
 
+            <div class="form-row">
+              <div class="form-group">
+                <label for="existing-system">Existing mitigation system installed?</label>
+                <select id="existing-system" name="existing-system">
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                  <option value="unsure">Unsure</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="test-result">Known radon test result (Bq/m³)</label>
+                <input type="number" id="test-result" name="test-result" placeholder="Leave blank if not tested" min="0" step="1">
+              </div>
+            </div>
+
             <!-- Online Quote Fields (detailed questions shown for Online) -->
             <div id="online-section" style="display: block;">
               <p style="margin: 1.5rem 0 0.25rem; font-weight: 600; font-size: 0.9rem; color: var(--navy);">Structural &amp; Foundation Details</p>
@@ -210,8 +226,13 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="furnaces">Number of Furnaces</label>
-                  <input type="number" id="furnaces" name="furnaces" placeholder="e.g. 1" min="1" max="5">
+                  <label for="radon-rough-in">Radon rough-in pipe?</label>
+                  <select id="radon-rough-in" name="radon-rough-in">
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="unsure">Unsure</option>
+                  </select>
                 </div>
               </div>
 
@@ -226,28 +247,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="support-columns">Support columns in basement?</label>
-                  <select id="support-columns" name="support-columns">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="unsure">Unsure</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="strip-footing">Strip footing?</label>
-                  <select id="strip-footing" name="strip-footing">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="unsure">Unsure</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="hole-under-furnace">Hole in concrete under furnace?</label>
+                  <label for="hole-under-furnace">Hole in concrete under any furnace?</label>
                   <select id="hole-under-furnace" name="hole-under-furnace">
                     <option value="">Select</option>
                     <option value="yes">Yes</option>
@@ -267,24 +267,8 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="sump-details">Sump pipe type &amp; diameter (if applicable)</label>
-                  <input type="text" id="sump-details" name="sump-details" placeholder="e.g. 4 inch PVC">
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
                   <label for="floor-drain">Floor drain present?</label>
                   <select id="floor-drain" name="floor-drain">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="unsure">Unsure</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="radon-rough-in">Radon rough-in pipe?</label>
-                  <select id="radon-rough-in" name="radon-rough-in">
                     <option value="">Select</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -347,21 +331,6 @@
                     <option value="soil">Soil</option>
                     <option value="other">Other</option>
                   </select>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="multiple-slabs">More than one concrete slab?</label>
-                  <select id="multiple-slabs" name="multiple-slabs">
-                    <option value="">Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="slabs-desc">If yes, describe</label>
-                  <input type="text" id="slabs-desc" name="slabs-desc" placeholder="e.g. garage slab separate">
                 </div>
               </div>
 
