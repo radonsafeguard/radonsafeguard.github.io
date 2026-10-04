@@ -218,6 +218,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const workGrid = document.getElementById('work-grid');
+  const workPages = document.getElementById('work-pages');
+  const workPageSize = 9;
+  if (workGrid && workPages) {
+    const workCards = Array.from(workGrid.querySelectorAll('.work-card'));
+    const workPageCount = Math.ceil(workCards.length / workPageSize);
+    let workPage = 1;
+
+    const showWorkPage = (page, scroll) => {
+      workPage = Math.min(Math.max(page, 1), workPageCount);
+      workCards.forEach((card, index) => {
+        const onPage = Math.floor(index / workPageSize) + 1 === workPage;
+        card.hidden = !onPage;
+      });
+      workPages.querySelectorAll('[data-page]').forEach(btn => {
+        const isCurrent = Number(btn.dataset.page) === workPage;
+        btn.setAttribute('aria-current', isCurrent ? 'page' : 'false');
+      });
+      if (scroll) {
+        workGrid.scrollIntoView({ block: 'start' });
+      }
+    };
+
+    if (workPageCount > 1) {
+      workPages.hidden = false;
+
+      for (let page = 1; page <= workPageCount; page += 1) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'work-page-btn';
+        btn.dataset.page = String(page);
+        btn.textContent = String(page);
+        btn.setAttribute('aria-label', 'Page ' + page);
+        workPages.appendChild(btn);
+      }
+
+      workPages.addEventListener('click', (event) => {
+        const btn = event.target.closest('button');
+        if (!btn || !btn.dataset.page) return;
+        showWorkPage(Number(btn.dataset.page), true);
+      });
+    }
+
+    showWorkPage(1, false);
+  }
+
   const lightbox = document.getElementById('work-lightbox');
   if (lightbox) {
     const lightboxImage = document.getElementById('work-lightbox-image');

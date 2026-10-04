@@ -2886,6 +2886,50 @@ picture {
   opacity: 1;
 }
 
+.work-pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.75rem;
+}
+
+.work-pages[hidden] {
+  display: none;
+}
+
+.work-page-btn {
+  min-width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--gray-200);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.work-page-btn:hover:not(:disabled),
+.work-page-btn:focus-visible {
+  border-color: var(--teal);
+  color: var(--teal-dark);
+}
+
+.work-page-btn[aria-current="page"] {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+}
+
+.work-page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .work-lightbox {
   position: fixed;
   inset: 0;
